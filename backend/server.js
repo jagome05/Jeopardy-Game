@@ -4,6 +4,8 @@ const app = express();
 const cors = require("cors");
 const pool = require("./DB/db.js")
 
+//! fix to ts
+
 //connects to local server host
 const PORT = process.env.PORT;
 
