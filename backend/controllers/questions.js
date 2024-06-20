@@ -3,17 +3,10 @@ const router = require("express").Router();
 //*GET Reqs
 // GET all messages
 router.get("/allQuestions", async (req, res) => {
-        // try {
-          // --> this returns a text response T.T
-          //todo edit fetch options?
-        // let res = await fetch('http://cluebase.lukelav.in/clues/1'
-        //   , {
-        //   method: "GET",
-        //   headers: {
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({data})
-        // }
+
+    //todo will possibly update with dataset in database(Postgresql)
+
+      //todo what is diff between async/await vs fetch/.then?
         let url = 'http://cluebase.lukelav.in/clues/1'
         fetch(url)
           .then((res) => res.json())
@@ -22,15 +15,6 @@ router.get("/allQuestions", async (req, res) => {
             res.status(200).json(data)
           })
           .catch((err) => console.log(err))
-      // );
-        // let results = await res.text()
-        // let results = await res.json()
-        // return results
-        // let data = JSON.parse(results)
-      // } catch(err) {
-        // res.send(err)
-      // }
-      // console.log(results)
 });
 
 
@@ -49,6 +33,11 @@ router.get("/allQuestions", async (req, res) => {
 // router.delete("/deleteMessage/:id", admin, async (req, res) => {});
 
 module.exports = router;
+
+//?datasets?
+//https://huggingface.co/datasets/openaccess-ai-collective/jeopardy
+//https://cluebase.readthedocs.io/en/latest/#clues-random
+//https://github.com/jwolle1/jeopardy_clue_dataset
 
 //? References
 // https://mongoosejs.com/docs/api/model.html#Model.findByIdAndUpdate()

@@ -3,34 +3,35 @@ import useGameState from "../../components/useGameState"
 import FirstRound from "../../components/FirstRound"
 import SecondRound from "../../components/SecondRound"
 import Final from "../../components/Final"
+import placeholderQuestions from "../../../placeholder-questions"
 
 export default function Random() {
 
-  const { currentStepIndex, steps, step, next, back, isFirstStep } = useGameState([<div>One</div>, <div>Two</div>, <FirstRound />, <SecondRound />, <Final />])
-  //let [questions, setQuestions] = useState([])
   //let [find, setFind] = useState(false)
+  
+  //* these are the placeholderquestions as an ARRAY of ONJECTS
+  let [questions, setQuestions] = useState(placeholderQuestions)
+  // console.log(questions)
 
-  // ! fix with backend
+  // ! fix with backend??
   // https://stackoverflow.com/questions/61899340/receiving-a-cors-error-when-to-my-react-app-using-fetch-function
-  useEffect(()=> {
-    const update = async () => {
-      try {
-        let res = await fetch('Localhost:4000/api/allQuestions', {
-          method: 'GET', 
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify()
-        });
-        let results = await res.json();
-        // console.log(data)
-      } catch(err) {
-        console.log(err)
-      }
-    }
-    update();
-  }, [])
+  // useEffect(()=> {
+  //   const update = async () => {
+  //     try {
+  //       let res = await fetch('http://localhost:4000/api/allQuestions');
+  //       let data = await res.json()
+  //      // let results = JSON.s
+  //       console.log(data)
+  //     } catch(err) {
+  //       console.log(err)
+  //     }
+  //   }
+  //   update();
+  // }, [])
+  let playerOneScore = 0
+  let playerTwoScore = 0
+
+  let { currentStepIndex, steps, step, next, back, isFirstStep } = useGameState([<FirstRound board={questions} />, <SecondRound board={questions} />, <Final />])
 
   return (
     <>
@@ -44,16 +45,16 @@ export default function Random() {
 
         <button>Grab random Questions!</button>
 
+        <div className="flex justify-evenly">
+          <h1 className="bg-red-300 border-black border-2 border-solid text-2xl p-2">Team 1 score: {playerOneScore}</h1>
+          <h1 className="bg-blue-300 border-black border-2 border-solid text-2xl p-2">Team 2 score: {playerTwoScore}</h1>
+        </div>
+
         <div>
           {step}
         </div>
 
-        <div className="flex justify-evenly">
-          <h1>Team 1 score:</h1>
-          <h1>Team 2 score:</h1>
-        </div>
-
-        <div className="flex gap-10">
+        <div className="flex gap-10 p-5">
           {!isFirstStep && (
             <button type="button" onClick={back}>Back</button>
           )}
