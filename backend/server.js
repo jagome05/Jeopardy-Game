@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const pool = require("./DB/db.js")
+//const pool = require("./DB/db.js")
 
-//! fix to ts
+//! fix to ts?!?!
 
 //connects to local server host
 const PORT = process.env.PORT;
@@ -13,17 +13,18 @@ const PORT = process.env.PORT;
 
 
 //connects to controllers
-// const messages = require("./controllers/message.js");
+const questions = require("./controllers/questions.js")
 // const users = require("./controllers/users.js");
 // const room = require("./controllers/room.js");
 // const admin = require("./middleware/isAdmin");
 
+//* cross origin issues
 app.use(cors());
 // * lets us read json
 app.use(express.json());
 
 // connects to endpoints
-// app.use("/api", messages);
+app.use("/api", questions);
 // app.use("/users", users);
 // app.use("/room", room);
 

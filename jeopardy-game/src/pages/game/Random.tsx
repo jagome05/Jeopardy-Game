@@ -10,13 +10,21 @@ export default function Random() {
   //let [questions, setQuestions] = useState([])
   //let [find, setFind] = useState(false)
 
+  // ! fix with backend
+  // https://stackoverflow.com/questions/61899340/receiving-a-cors-error-when-to-my-react-app-using-fetch-function
   useEffect(()=> {
     const update = async () => {
       try {
-        // ! fix with backend
-        let res = await fetch('https://cluebase.lukelav.in/clues/1');
-        let data = await res.json();
-        console.log(data)
+        let res = await fetch('Localhost:4000/api/allQuestions', {
+          method: 'GET', 
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify()
+        });
+        let results = await res.json();
+        // console.log(data)
       } catch(err) {
         console.log(err)
       }

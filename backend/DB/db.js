@@ -1,5 +1,6 @@
 const Pool  = require("pg").Pool;
 
+//! changed from localhost
 const PGUSER = process.env.PGUSER
 const PGPASSWORD = process.env.PGPASSWORD
 const PGHOST = process.env.PGHOST
@@ -17,3 +18,6 @@ const pool = new Pool({
 
 //* export
 module.exports = pool;
+
+//? ref
+//https://stackoverflow.com/questions/74072051/http-request-from-node-server-to-strapi-throws-error-econnrefused
