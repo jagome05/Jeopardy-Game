@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import useGameState from "../../components/useGameState"
+import Homepage from "../Homepage"
 import FirstRound from "../../components/FirstRound"
 import SecondRound from "../../components/SecondRound"
 import Final from "../../components/Final"
@@ -28,10 +29,13 @@ export default function Random() {
   //   }
   //   update();
   // }, [])
-  let playerOneScore = 0
-  let playerTwoScore = 0
 
-  let { currentStepIndex, steps, step, next, back, isFirstStep } = useGameState([<FirstRound board={questions} />, <SecondRound board={questions} />, <Final />])
+  let [turn, setTurn] = useState(false)
+
+  let [playerOneScore, setPlayerOneScore] = useState(0)
+  let [playerTwoScore, setPlayerTwoScore] = useState(0)
+
+  let { currentStepIndex, steps, step, next, back, isFirstStep } = useGameState([<Homepage/> , <FirstRound board={questions} turn={turn} setTurn={setTurn} oneScore={playerOneScore} twoScore={playerTwoScore} setOneScore={setPlayerOneScore} setTwoScore={setPlayerTwoScore}/>, <SecondRound board={questions} turn={turn} setTurn={setTurn} oneScore={playerOneScore} twoScore={playerTwoScore} setOneScore={setPlayerOneScore} setTwoScore={setPlayerTwoScore}/>, <Final />])
 
   return (
     <>
@@ -41,13 +45,20 @@ export default function Random() {
           <h1>Current page: {currentStepIndex + 1} / {steps.length}</h1>
         </div>
 
-        <h1>Game Start!</h1>
+        {/* <h1>Game Start!</h1>
 
-        <button>Grab random Questions!</button>
+        <button>Grab random Questions!</button> */}
 
         <div className="flex justify-evenly">
-          <h1 className="bg-red-300 border-black border-2 border-solid text-2xl p-2">Team 1 score: {playerOneScore}</h1>
-          <h1 className="bg-blue-300 border-black border-2 border-solid text-2xl p-2">Team 2 score: {playerTwoScore}</h1>
+
+          {/* //todo edit so text boxdoesnt move */}
+          <div className="flex gap-2">
+          {!turn && <h2 className="text-2xl font-bold p-2">Current: </h2>}<h1 className="bg-red-300 border-black border-2 border-solid text-2xl p-2">Team 1 score: {playerOneScore}</h1>
+          </div>
+
+          <div className="flex gap-2">
+          {turn && <h2 className="text-2xl font-bold p-2">Current: </h2>}<h1 className="bg-blue-300 border-black border-2 border-solid text-2xl p-2">Team 2 score: {playerTwoScore}</h1>
+          </div>
         </div>
 
         <div>
@@ -56,9 +67,10 @@ export default function Random() {
 
         <div className="flex gap-10 p-5">
           {!isFirstStep && (
-            <button type="button" onClick={back}>Back</button>
+            <button className="bg-slate-300 p-3 rounded-md border-black border-solid border-2" type="button" onClick={back}>Back</button>
           )}
-          <button type="button" onClick={next}>Next</button>
+          <button className="bg-slate-300 p-3 rounded-md border-black border-solid border-2" type="button" onClick={next}>Next</button>
+          <button className="bg-slate-300 p-3 rounded-md border-black border-solid border-2" type="button" onClick={() => setTurn(!turn)}>Toggle Player Turn</button>
         </div>
 
       </div>

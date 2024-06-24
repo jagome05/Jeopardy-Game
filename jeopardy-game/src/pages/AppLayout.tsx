@@ -9,7 +9,7 @@ export default function AppLayout() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main>
         <Outlet />
       </main>
