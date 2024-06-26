@@ -1,10 +1,11 @@
+import jeopardy from "../assets/jeopardy.png"
+
 export default function Homepage() {
 
   return (
     <>
-      <div>
-        {/* //todo update img lol */}
-        <img src="https://images.squarespace-cdn.com/content/v1/5982075ce58c6204fc1f005c/1585320701816-UZT4UV0YSAU6BZYFN1AV/jeopardy.jpg" alt="Jeopardy screen"></img>
+      <div className="flex justify-center content-center">
+        <img src={jeopardy} alt="Jeopardy screen"></img>
         
       </div>
     </>

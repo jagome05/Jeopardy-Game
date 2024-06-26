@@ -6,14 +6,19 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
 
   let firstSet = board.slice(0, 30)
 
-  //* this will set active question for dialog box
+  //* this will set active question and answer for dialog box
   let [activeQ, setActiveQ] = useState({})
   let [answer, setAnswer] = useState('')
+
+  //* updates board with score numbers
+  //todo update with categories and database/API
   let [score, setScore] = useState([])
+
+  //* updates text to display if right or wrong
   let [truth, setTruth] = useState(false)
 
   //todo if in usedArr then style will be different
-  let usedStyle = 'bg-slate-200 border-black border-solid border-2 h-20 line-through'
+  let usedStyle = 'bg-slate-200 opacity-35 border-black border-solid border-2 h-20 line-through'
   let activeStyle = 'bg-slate-200 border-black border-solid border-2 h-20'
 
   const [modal, setModal] = useState(false);
@@ -89,13 +94,13 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
 
   return (
     <>
-      <div className="bg-pink-300 relative">
+      <div className="bg-purple-300 border-black border-2 border-solid relative">
 
-        <div className="m-10 p-5 bg-blue-400 text-center">
-          <h1 className="text-5xl">Round 1</h1>
+        <div className="flex justify-center">
+          <h1 className="text-5xl m-10 p-5 bg-white border-black border-solid border-2">Round 1</h1>
         </div>
 
-        <div className="grid grid-cols-6 grid-rows-5 grid-flow-col gap-10 bg-green-400 p-6">
+        <div className="grid grid-cols-6 grid-rows-5 grid-flow-col gap-10 p-6">
           {firstSet.map((item, index) => (
             <button onClick={(e) => handleClick(index, e)} key={index} className={usedArr.includes(index) ? usedStyle : activeStyle}>
               {<Points value={index} object={item} />}
@@ -106,7 +111,7 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
 
       </div>
 
-      {/* //todo modal */}
+      {/* //* modal */}
       {modal ? <Box truth={truth} setTruth={setTruth} setModal={setModal} turn={turn} setTurn={setTurn} activeQ={activeQ} setValue={setScore} handleOnChange={handleOnChange} setAnswer={setAnswer} answer={answer} value={score} playerOne={oneScore} playerTwo={twoScore} setOneScore={setOneScore} setTwoScore={setTwoScore} /> : null}
     </>
   )
@@ -116,6 +121,7 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
 function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneScore, setTwoScore, setAnswer, setValue, value, truth, setTruth, playerOne, playerTwo }) {
 
   let [nextQuestion, setNextQuestion] = useState(false)
+  let [reveal, setReveal] = useState(false);
   let num = Number(value[0])
 
   function updateScore() {
@@ -127,10 +133,12 @@ function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneS
       setTurn(!turn)
     }
   }
+
+
   
   function handleSubmit() {
     setTruth(true)
-    if(activeQ.answer == answer) {
+    if(activeQ.answer.toLowerCase() === answer.toLowerCase()) {
       updateScore()
       setNextQuestion(true)
       usedArr.push(value[1])
@@ -139,7 +147,7 @@ function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneS
 
   function CheckAnswer() {
     console.log(value)
-    if (activeQ.answer == answer) {
+    if (activeQ.answer.toLowerCase() === answer.toLowerCase()) {
       console.log("Correct!")
       return (
         <h1 className="text-green-500">Correct!</h1>
@@ -160,6 +168,7 @@ function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneS
   function handleCancel() {
     setModal(false)
     setValue(0)
+    setReveal(false)
     setTruth(false)
     setAnswer("")
   }
@@ -175,7 +184,7 @@ function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneS
         <input className="border-black border-solid border-2 p-2" placeholder="Type Answer" type="text" value={answer} onChange={e => handleOnChange(e)} />
 
         <div className="flex gap-10">
-          <button onClick={handleSubmit} className="bg-slate-300 p-3 rounded-md border-black border-solid border-2">Submit answer</button>
+          {!nextQuestion && <button onClick={handleSubmit} className="bg-slate-300 p-3 rounded-md border-black border-solid border-2">Submit answer</button>}
           {nextQuestion ? 
           <button onClick={handleCancel} className="bg-slate-300 p-3 rounded-md border-black border-solid border-2">Next!</button> : 
           <button onClick={handleCancel} className="bg-slate-300 p-3 rounded-md border-black border-solid border-2">Cancel</button>}
@@ -183,8 +192,10 @@ function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneS
 
         {truth && <CheckAnswer />}
 
-        {/* //todo delete after testing lol */}
-        <h1>answer is {activeQ.answer}</h1>
+        <div>
+        <button className="bg-slate-400 p-2 border-2 border-solid border-black" onClick={() => setReveal(!reveal)}>Reveal answer</button>
+        {reveal && <h1>answer is "{activeQ.answer}"</h1>}
+        </div>
       </div>
     </div>
   )

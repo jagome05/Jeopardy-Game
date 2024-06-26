@@ -18,7 +18,7 @@ import Random from './pages/game/Random';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>
-      <Route path="" element={<Homepage />} />
+      <Route path="" element={<Random />} />
       <Route path="/user" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* //todo <Route path="/user_id" element={<User Account />} /> */}

@@ -22,7 +22,7 @@ export default function useGameState(steps: ReactElement[]) {
     })
   }
 
-    //--> fxn
+    //-->
   function goTo(index: number) {
     setCurrentStepIndex(index)
   }
