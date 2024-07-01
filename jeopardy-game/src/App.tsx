@@ -8,7 +8,7 @@ import {
 
 //* import from pages
 import AppLayout from "./pages/AppLayout";
-import Homepage from "./pages/Homepage";
+// import Homepage from "./pages/Homepage";
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Gamepage from './pages/game/Gamepage';

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import useGameState from "../../components/useGameState"
 import Homepage from "../Homepage"
 import FirstRound from "../../components/FirstRound"

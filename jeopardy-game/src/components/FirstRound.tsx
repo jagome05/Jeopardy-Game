@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 
-let usedArr = []
+let usedArr:any = []
 
-export default function FirstRound({ board, oneScore, twoScore, setOneScore, setTwoScore, turn, setTurn }) {
+interface Pass{ board: any, oneScore: any, twoScore: any, setOneScore: any, setTwoScore: any, turn: any, setTurn: any }
+
+export default function FirstRound({ board, oneScore, twoScore, setOneScore, setTwoScore, turn, setTurn }: Pass) {
 
   let firstSet = board.slice(0, 30)
 
@@ -12,7 +14,7 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
 
   //* updates board with score numbers
   //todo update with categories and database/API
-  let [score, setScore] = useState([])
+  let [score, setScore] = useState<any[]>([])
 
   //* updates text to display if right or wrong
   let [truth, setTruth] = useState(false)
@@ -24,22 +26,22 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
   const [modal, setModal] = useState(false);
 
   //todo function for onclick
-  function handleClick(key, e) {
+  function handleClick(key: any, e: any) {
     setActiveQ(firstSet[key])
     setScore([e.target.innerText, key])
     setModal(true)
   }
 
   //todo update to allow lower case answer
-  function handleOnChange(e) {
+  function handleOnChange(e: any) {
     setAnswer(e.target.value)
     setTruth(false)
   }
 
   useEffect(() => console.log(activeQ), [activeQ])
 
-  function Points({ value, object }) {
-    switch (value) {
+  function Points(props: { value: any, object: any }) {
+    switch (props.value) {
       case 0:
       case 5:
       case 10:
@@ -87,7 +89,7 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
         );
       default:
         return (
-          <h1>{object.answer}</h1>
+          <h1>{props.object.answer}</h1>
         )
     }
   }
@@ -101,7 +103,7 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
         </div>
 
         <div className="grid grid-cols-6 grid-rows-5 grid-flow-col gap-10 p-6">
-          {firstSet.map((item, index) => (
+          {firstSet.map((item:any, index:any) => (
             <button onClick={(e) => handleClick(index, e)} key={index} className={usedArr.includes(index) ? usedStyle : activeStyle}>
               {<Points value={index} object={item} />}
             </button>
@@ -117,8 +119,12 @@ export default function FirstRound({ board, oneScore, twoScore, setOneScore, set
   )
 }
 
+interface Props{
+   setModal: any, activeQ: any, handleOnChange: any, turn: any, setTurn: any, answer: any, setOneScore: any, setTwoScore: any, setAnswer: any, setValue: any, value: any, truth: any, setTruth: any, playerOne: any, playerTwo: any 
+}
+
 //* modal that opens up for each questions
-function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneScore, setTwoScore, setAnswer, setValue, value, truth, setTruth, playerOne, playerTwo }) {
+function Box({ setModal, activeQ, handleOnChange, turn, setTurn, answer, setOneScore, setTwoScore, setAnswer, setValue, value, truth, setTruth, playerOne, playerTwo }: Props) {
 
   let [nextQuestion, setNextQuestion] = useState(false)
   let [reveal, setReveal] = useState(false);
