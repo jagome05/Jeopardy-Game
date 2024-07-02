@@ -1,4 +1,5 @@
 # Basic Jeopardy Game!
+Link: https://jeopardy-game-liart.vercel.app/
 
 This project helped me establish using javascript/typescript and applying object oriented programming ideas and concepts!  
 I updated it using Vite and Tailwind, but kept the same placeholder questions
